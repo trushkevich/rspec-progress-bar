@@ -14,8 +14,7 @@ module RspecProgressBar
 
     def example_started(_notification)
       progress_bar.count += 1
-      output << "#{progress_bar}\r"
-      output.flush
+      output << "\r#{progress_bar}"
     end
   end
 end

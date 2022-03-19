@@ -54,13 +54,7 @@ RSpec.describe RspecProgressBar::Formatter do
 
       expect(io)
         .to have_received(:<<)
-        .with("PROGRESS\r")
-    end
-
-    it 'flushes IO to OS' do
-      formatter.example_started(notification)
-
-      expect(io).to have_received(:flush)
+        .with("\rPROGRESS")
     end
   end
 end
