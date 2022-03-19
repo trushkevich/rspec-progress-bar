@@ -8,17 +8,14 @@ module RspecProgressBar
 
     attr_accessor :progress_bar
 
-    def initialize(output)
-      @output = output
-    end
-
     def start(notification)
       @progress_bar = ProgressBar.new(notification.count)
     end
 
     def example_started(_notification)
       progress_bar.count += 1
-      @output << "#{progress_bar}\r"
+      output << "#{progress_bar}\r"
+      output.flush
     end
   end
 end

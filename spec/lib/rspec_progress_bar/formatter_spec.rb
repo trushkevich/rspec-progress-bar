@@ -6,6 +6,10 @@ RSpec.describe RspecProgressBar::Formatter do
   let(:io) { double }
   let(:formatter) { described_class.new(io) }
 
+  it 'inherits from RSpec::Core::Formatters::BaseTextFormatter' do
+    expect(formatter).to be_a(RSpec::Core::Formatters::BaseTextFormatter)
+  end
+
   describe '#initialize' do
     it 'assigns @output' do
       expect(formatter.instance_variable_get(:@output)).to eq(io)
@@ -32,6 +36,7 @@ RSpec.describe RspecProgressBar::Formatter do
     before do
       formatter.start(notification)
       allow(io).to receive(:<<)
+      allow(io).to receive(:flush)
       allow(formatter.progress_bar)
         .to receive(:to_s)
         .and_return('PROGRESS')
@@ -50,6 +55,12 @@ RSpec.describe RspecProgressBar::Formatter do
       expect(io)
         .to have_received(:<<)
         .with("PROGRESS\r")
+    end
+
+    it 'flushes IO to OS' do
+      formatter.example_started(notification)
+
+      expect(io).to have_received(:flush)
     end
   end
 end
